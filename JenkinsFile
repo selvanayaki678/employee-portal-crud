@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+                steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/selvanayaki678/employee-portal-crud.git']]])            
+                  }
+            }
+            stage ('checking current dir'){
+                steps {
+                    sh 'pwd;ls;printenv'
+                }
+            }
+
+    }
+}
