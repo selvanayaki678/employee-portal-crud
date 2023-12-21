@@ -11,6 +11,16 @@ pipeline {
                     sh 'pwd;ls;printenv'
                 }
             }
+            stage ('MVN build'){
+                steps {
+                    sh 'cd springboot-backend;mvn clean install'
+                }
+            }
+            stage ('Docker build'){
+                steps {
+                    sh 'cd springboot-backend;docker build -t java-image:v1 .'
+                }
+            }
 
     }
 }
