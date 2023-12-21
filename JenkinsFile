@@ -18,7 +18,7 @@ pipeline {
             }
             stage ('Docker build'){
                 steps {
-                    sh 'cd springboot-backend;docker build -t java-image:v1 .'
+                    sh 'cd springboot-backend;docker build -t selvanayaki2509/employee-crud-java:${BUILD_NUMBER} .'
                 }
             }
 
