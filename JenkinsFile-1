@@ -31,23 +31,23 @@ pipeline {
                 sh 'docker push selvanayaki2509/employee-crud-reactjs:${BUILD_NUMBER}'
               }
             }
-            // stage ('terraform init')
-            // {
-            //     steps {
-            //         sh 'cd terraform-helm-react;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
-            // }
-            // } 
-            // stage ('Terraform apply')
-            // {
+            stage ('terraform init')
+            {
+                steps {
+                     sh 'cd terraform-helm-react;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+             }
+             } 
+            stage ('Terraform apply')
+             {
             //     // when {
             //     // expression {  return params.apply == true  }
             //     // }
-            //         steps {
-            //         sh 'cd terraform-helm-react;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
-            //     }
+                    steps {
+                    sh 'cd terraform-helm-react;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
+                }
             
 
-            // }
+             }
 
   }
   post {
