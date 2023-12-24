@@ -2,6 +2,8 @@ pipeline {
     agent any
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    AWS_ACCESS_KEY_ID=credentials('aws_access_key')
+    AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
   }
     stages {
         stage('Checkout') {
@@ -34,6 +36,24 @@ pipeline {
                 sh 'docker push selvanayaki2509/employee-crud-java:${BUILD_NUMBER}'
               }
             }
+            stage ('terraform init')
+            {
+                steps {
+                    sh 'cd helm-java-middleend;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+            }
+            } 
+            stage ('Terraform apply')
+            {
+                // when {
+                // expression {  return params.apply == true  }
+                // }
+                    steps {
+                    sh 'cd helm-java-middleend;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
+                }
+            
+
+            }
+
   }
   post {
     always {
