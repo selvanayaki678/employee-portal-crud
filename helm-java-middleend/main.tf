@@ -46,7 +46,7 @@ provider "helm" {
   }
 }
 resource "helm_release" "java-emp1" {
-  chart      = "helm-java-middleend/java-employee"
+  chart      = "${path.module}/java-employee"
   name       = "java-app"
   namespace  = "default"
   atomic =  true 
