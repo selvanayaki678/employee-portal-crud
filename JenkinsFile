@@ -4,6 +4,9 @@ pipeline {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     AWS_ACCESS_KEY_ID=credentials('aws_access_key')
     AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
+    db_url=credentials('rds_endpoint')
+    db_username=credentials('rds_username')
+    db_password=credentials('rds_password')
   }
     stages {
         stage('Checkout') {
