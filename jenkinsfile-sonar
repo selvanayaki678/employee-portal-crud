@@ -35,3 +35,4 @@ pipeline {
                     sh 'cd springboot-backend;mvn clean install'
                 }
             }
+}
