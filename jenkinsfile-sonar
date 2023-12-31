@@ -7,6 +7,7 @@ pipeline {
     db_url=credentials('rds_endpoint')
     db_username=credentials('rds_username')
     db_password=credentials('rds_password')
+    SCANNER_HOME=tool 'sonarqube-scanner'
   }
     stages {
         stage('Checkout') {
