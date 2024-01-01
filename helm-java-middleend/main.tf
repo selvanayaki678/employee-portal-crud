@@ -15,7 +15,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "terraform-statefile-s3-aws"
-    key    = "state/eks-nginx-ingress.tfstate"
+    key    = "state/java-helm-deployment.tfstate"
     region = "us-east-2"
   }
 }
