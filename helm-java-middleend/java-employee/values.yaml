@@ -37,7 +37,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: LoadBalancer
+  type: ""
   port: 8081
   annotations: {}
     # "service\.beta\.kubernetes\.io/aws-load-balancer-type": "nlb"
