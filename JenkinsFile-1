@@ -4,6 +4,7 @@ pipeline {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     AWS_ACCESS_KEY_ID=credentials('aws_access_key')
     AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
+    SCANNER_HOME=tool 'sonarqube-scanner'
   }
     stages {
         stage('Checkout') {
@@ -11,11 +12,15 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/selvanayaki678/employee-portal-crud.git']]])            
                   }
             }
-            stage ('checking current dir'){
-                steps {
-                    sh 'pwd;ls;printenv'
-                }
-            } 
+
+            stage('SonarQube analysis') {  
+              steps{
+                withSonarQubeEnv('sonarqube') {      
+  
+                    sh "cd react-frontend;${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=react-project "
+                  }
+              }
+            }
             stage ('Docker build'){
                 steps {
                     sh 'cd react-frontend;docker build -t selvanayaki2509/employee-crud-reactjs:${BUILD_NUMBER} .'
@@ -24,6 +29,11 @@ pipeline {
             stage('Docker Login') {
               steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+              }
+            }
+            stage('Trivy Scan') {
+              steps {
+                sh 'trivy image selvanayaki2509/employee-crud-reactjs:${BUILD_NUMBER}'
               }
             }
             stage('Push') {
