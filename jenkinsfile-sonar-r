@@ -25,7 +25,7 @@ pipeline {
           steps{
             withSonarQubeEnv('sonarqube') {        
     
-            sh "cd react-frontend;${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=react-project -Dsonar.sources=. /src "
+            sh "cd react-frontend;${SCANNER_HOME}/bin/sonar-scanner -Dsonar.projectKey=react-project -Dsonar.sources=. / "
               }
           }
         }
