@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const EMPLOYEE_API_BASE_URL = "http://ad28fa64a56214e98b540807172d0e79-951335050.us-east-2.elb.amazonaws.com:8081/api/v1/employees";
+const EMPLOYEE_API_BASE_URL = "http://java-employee-svc.default.cluster.local:8081/api/v1/employees";
 
 class EmployeeService {
 

@@ -1,0 +1,81 @@
+pipeline {
+    agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    AWS_ACCESS_KEY_ID=credentials('aws_access_key')
+    AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
+    db_url=credentials('rds_endpoint')
+    db_username=credentials('rds_username')
+    db_password=credentials('rds_password')
+    SCANNER_HOME=tool 'sonarqube-scanner'
+  }
+    stages {
+        stage('Checkout') {
+          steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/selvanayaki678/employee-portal-crud.git']]])            
+          }
+        }
+        stage('Build'){
+              steps{
+                  sh 'cd springboot-backend;mvn clean package'
+              }
+        }
+        stage('SonarQube analysis') {  
+          steps{
+            withSonarQubeEnv('sonarqube') {      
+   
+              sh "cd springboot-backend;mvn sonar:sonar -Dsonar.projectKey=java-employee-project -Dsonar.projectName='java-employee-project'"
+            }
+          }
+        }
+        stage ('MVN build'){
+          steps {
+            sh 'cd springboot-backend;mvn clean install'
+          }
+        }
+        stage ('Docker build'){
+                steps {
+                    sh 'cd springboot-backend;docker build -t selvanayaki2509/employee-crud-java:${BUILD_NUMBER} .'
+                }
+            }
+        stage('Docker Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+              }
+        }
+        stage('Trivy Docker Image Scan ') {
+          steps {
+                sh 'trivy image selvanayaki2509/employee-crud-java:${BUILD_NUMBER}'
+              }
+        }
+        stage('Push') {
+          steps {
+                sh 'docker push selvanayaki2509/employee-crud-java:${BUILD_NUMBER}'
+              }
+        }
+        stage ('terraform init')
+        {
+            steps {
+              sh 'cd helm-java-middleend;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+            }
+        } 
+        stage ('Terraform apply')
+        {
+          // when {
+            // expression {  return params.apply == true  }
+            // }
+          steps {
+              sh 'cd helm-java-middleend;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
+          }           
+
+        }
+
+  }
+  post {
+    always {
+      sh 'docker logout'
+    }
+  }
+
+    
+}
