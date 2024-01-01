@@ -17,7 +17,7 @@ pipeline {
             }
         stage('Build'){
             steps{
-                sh 'cd react-frontend;
+                sh 'cd react-frontend';
             }
          }
         stage('SonarQube analysis') {
@@ -25,7 +25,7 @@ pipeline {
           steps{
             withSonarQubeEnv('sonarqube') {        
     
-            sh "cd react-frontend;sonar-scanner   -Dsonar.projectKey=react-project -Dsonar.sources=. \src "
+            sh "cd react-frontend;sonar-scanner -Dsonar.projectKey=react-project -Dsonar.sources=.\src "
               }
           }
         }
