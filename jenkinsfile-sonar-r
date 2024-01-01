@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+  environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    AWS_ACCESS_KEY_ID=credentials('aws_access_key')
+    AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
+    db_url=credentials('rds_endpoint')
+    db_username=credentials('rds_username')
+    db_password=credentials('rds_password')
+    SCANNER_HOME=tool 'sonarqube-scanner'
+  }
+    stages {
+        stage('Checkout') {
+                steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/selvanayaki678/employee-portal-crud.git']]])            
+                  }
+            }
+        stage('Build'){
+            steps{
+                sh 'cd react-frontend;
+            }
+         }
+        stage('SonarQube analysis') {
+  
+          steps{
+            withSonarQubeEnv('sonarqube') {        
+    
+            sh "cd react-frontend;sonar-scanner   -Dsonar.projectKey=react-project -Dsonar.sources=. \src "
+              }
+          }
+        }
+       
+   
+}
+}
