@@ -12,6 +12,7 @@ pipeline {
     parameters {    
     
     booleanParam( defaultValue: true, description: '',name: 'trivy' )
+    booleanParam( defaultValue: true, description: '',name: 'sonar' )
              
         }
     stages {
@@ -26,6 +27,9 @@ pipeline {
               }
         }
         stage('SonarQube analysis') {  
+          when {
+                expression {  return params.sonar == false }
+                } 
           steps{
             withSonarQubeEnv('sonarqube') {      
    
@@ -50,7 +54,7 @@ pipeline {
         }
         stage('Trivy Docker Image Scan ') {
             when {
-                expression {  return params.trivy == true  }
+                expression {  return params.trivy == false  }
                 }
           steps {
                 sh 'trivy image selvanayaki2509/employee-crud-java:${BUILD_NUMBER}'
