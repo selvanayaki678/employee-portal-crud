@@ -35,7 +35,7 @@ pipeline {
         }
         stage ('Docker build'){
                 steps {
-                    sh 'cd springboot-backend;docker build -t selvanayaki2509/employee-crud-java:${BUILD_NUMBER} .'
+                    sh 'cd springboot-backend;docker build -t selvanayaki2509/employee-crud-java:${BUILD_NUMBER} --build-arg db=${db_url} --build-arg username=${db_username} --build-arg password=${db_password} .'
                 }
             }
         stage('Docker Login') {
