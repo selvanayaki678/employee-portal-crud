@@ -68,7 +68,7 @@ pipeline {
         stage ('terraform init')
         {
             steps {
-              sh 'cd helm-java-middleend;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+              sh 'cd helm-java-middleend;terraform init -reconfigure;pwd;terraform plan -var tag=${BUILD_NUMBER}'
             }
         } 
         stage ('Terraform apply')
