@@ -6,6 +6,11 @@ pipeline {
     AWS_SECRET_ACCESS_KEY=credentials('aws_access_key_value')
     SCANNER_HOME=tool 'sonarqube-scanner'
   }
+      parameters {  
+   
+      booleanParam( defaultValue: true, description: '',name: 'trivy' )
+             
+        }
   stages {
         stage('Checkout') {
                 steps {
@@ -32,6 +37,9 @@ pipeline {
               }
             }
             stage('Trivy Docker Image Scan') {
+               when {
+                expression {  return params.trivy == true  }
+                }
               steps {
                 sh 'trivy image selvanayaki2509/employee-crud-reactjs:${BUILD_NUMBER}'
               }
