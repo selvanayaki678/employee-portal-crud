@@ -28,7 +28,7 @@ pipeline {
         }
         stage('SonarQube analysis') {  
           when {
-                expression {  return params.sonar == false }
+                expression {  return params.sonar == true }
                 } 
           steps{
             withSonarQubeEnv('sonarqube') {      
@@ -54,7 +54,7 @@ pipeline {
         }
         stage('Trivy Docker Image Scan ') {
             when {
-                expression {  return params.trivy == false  }
+                expression {  return params.trivy == true  }
                 }
           steps {
                 sh 'trivy image selvanayaki2509/employee-crud-java:${BUILD_NUMBER}'
