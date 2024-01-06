@@ -106,3 +106,7 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
         Explored pod metrics."
 5. **To access application publicly using custom url**
     - In Route 53, created a DNS entry to associate our custom URL with the IP address of the Nginx Ingress controller.
+# Jenkins CICD execution
+## Java application
+![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/79c31eb5-9969-42df-9e19-bf4d99e28c4d)
+## React application
