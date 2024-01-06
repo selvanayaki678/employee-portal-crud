@@ -8,8 +8,8 @@ pipeline {
   }
       parameters {  
    
-      booleanParam( defaultValue: true, description: '',name: 'trivy' )
-      booleanParam( defaultValue: false, description: '',name: 'sonar' )
+      booleanParam( defaultValue: false, description: '',name: 'trivy' )
+      booleanParam( defaultValue: true, description: '',name: 'sonar' )
              
         }
   stages {
