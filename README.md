@@ -15,6 +15,8 @@ This Employee Management Application helps organizations streamline employee-rel
 ## Deployment
 
 The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jenkins for continuous integration and continuous deployment (CI/CD).
+   #### Deployment Architecture
+   ![employee-management-portal-cicd-flow-diagram](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/43d83e49-25df-46a6-84a2-db640a251f78)
 
 ## CI/CD Pipeline
 
@@ -76,14 +78,15 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
     - docker run -dir --name java-app -p 8080:8081 <javaimagename>
 
 **Note**:Mysql needs to allow connections from java endpoint(ip)
-         - To allow connections from a specific IP address to the MySQL local instance, execute the following commands inside the MySQL database:
-            - CREATE USER 'root'@'ip_address' IDENTIFIED BY 'some_pass'; 
-            - GRANT ALL PRIVILEGES ON . TO 'root'@'ip_address'; 
+         - To allow connections from a specific IP address to the MySQL local instance, execute the following commands inside the MySQL database:\
+            - CREATE USER 'root'@'ip_address' IDENTIFIED BY 'some_pass'; \
+            - GRANT ALL PRIVILEGES ON . TO 'root'@'ip_address'; \
             - SELECT user,host from mysql.user;
 
 # To Run application in EKS 
 1. **Create EKS and RDS instance**
     - Use the following GitHub link to create instances in AWS: https://github.com/selvanayaki678/terraform-aws
+![Project1-Employee_portal-Page-1](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/f0ec20b9-e7a3-425b-9dca-a3b14f0c9166)
 
 2. **Deploying Nginx ingress controller,Prometheus and sonarqube in EKS**
     - Refer this following Github link to deploy Nginx ingress controller,Prometheus and Kube state metrics helm chart and sonarqube in EKS: https://github.com/selvanayaki678/k8s-infra-helm-charts
@@ -98,8 +101,8 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
    **Grafana:**
     - Installed Grafana on the local machine.
     - Configured the datasource as Prometheus.
-    -  Grafana dashboard: 13332 - kube state metrics.
-        Developed custom queries to obtain the count of pods, running pods, and failed pods in a specific namespace.
+    -  Grafana dashboard: 13332 - kube state metrics.\
+        Developed custom queries to obtain the count of pods, running pods, and failed pods in a specific namespace.\
         Explored pod metrics."
 5. **To access application publicly using custom url**
     - In Route 53, created a DNS entry to associate our custom URL with the IP address of the Nginx Ingress controller.
