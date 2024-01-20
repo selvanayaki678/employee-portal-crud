@@ -1,10 +1,13 @@
-# Employee Management Application
+# Employee Management Application Deployment to EKS using Jenkins CICD
 
 An Employee Management Application built with React.js, Node.js, and MySQL, deployed on Amazon EKS using Jenkins as the CI/CD tool.
 
-## Overview
+## Application Overview
 
 This Employee Management Application helps organizations streamline employee-related tasks(create,update, delete and view), utilizing a tech stack of React.js for the front end, Node.js for the backend, and MySQL for data storage.
+
+![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/174b0b89-1d39-49b6-801d-2f3015597edf)
+
 
 ## Tech Stack
 
@@ -65,12 +68,12 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
     - Create Database --> create database employee_management_system;
 
 4. **Build a Java Docker image**
-    - Configure MySQL endpoint, username, and password in employee-portal-crud/springboot-backend/src/main/resources/application.properties file.
+    - To configure MySQL endpoint(username, and password) in source code , Go to employee-portal-crud/springboot-backend/src/main/resources/application.properties file and add mysql endpoint url.
     - Best practice is to keep these as environment variables rather than hardcoding.
-    - cd employee-portal-crud/springboot-backend/ , Run mvn clean install;docker build -t <dockerimagename:version> . 
+    - To build a docker image; cd employee-portal-crud/springboot-backend/;Run mvn clean install;docker build -t <dockerimagename:version> . 
 
 5. **Build a react image**
-    - Congifure java endpoint in react-frontend/src/services/EmployeeService.js
+    - To congifure java endpoint in react source code, go to react-frontend/src/services/EmployeeService.js file and add javaendpoint url
     - Build docker image : cd react-frontend; docker build -t <reactjs_docker_image:version> . 
 
 6. **Running containers**
@@ -91,22 +94,47 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
 2. **Deploying Nginx ingress controller,Prometheus and sonarqube in EKS**
     - Refer this following Github link to deploy Nginx ingress controller,Prometheus and Kube state metrics helm chart and sonarqube in EKS: https://github.com/selvanayaki678/k8s-infra-helm-charts
 
-3. **Deploying React and Java applicatio in EKS using Jenkins**
+3. **Deploying React and Java application in EKS using Jenkins**
      - Configured all build and deploy (CI/CD)steps in jenkinsfile to deploy application into EKS
 
 4. **Monitoring EKS using Prometheus and Grafana**
     - Configured Prometheus in EKS using Helm chart, without downloading Prometheus from the official website. Followed the steps provided in this link for setting up Prometheus: https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/.
 
-    - Prometheus targets include kube state metrics and cAdvisor
+    - Prometheus targets include kube state metrics and cAdvisor. \
    **Grafana:**
     - Installed Grafana on the local machine.
     - Configured the datasource as Prometheus.
     -  Grafana dashboard: 13332 - kube state metrics.\
         Developed custom queries to obtain the count of pods, running pods, and failed pods in a specific namespace.\
-        Explored pod metrics."
+        
 5. **To access application publicly using custom url**
     - In Route 53, created a DNS entry to associate our custom URL with the IP address of the Nginx Ingress controller.
-# Jenkins CICD execution
-## Java application
-![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/79c31eb5-9969-42df-9e19-bf4d99e28c4d)
-## React application
+# Application Deployment with screenshots
+   
+   ## Application CICD execution
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/79c31eb5-9969-42df-9e19-bf4d99e28c4d)
+   
+   ## Docker Hub Application Images
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/21d790b5-338b-4ec6-817e-76e1a9b44913)
+
+   ## Application in EKS
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/b2cbf734-39ba-41f4-91e0-a6b271a4f034)
+
+   ## Route 53 Configuration
+  ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/ef2f5511-13cc-4648-9a2f-de5021976736)
+
+   ## SonarQube 
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/ae24eca3-2fc5-426f-a7f7-60cf86c6598f)
+   
+   ## Prometheus 
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/b19beef1-9cd6-451f-b1e7-d548cc4988f0)
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/727a2384-7dfb-44b3-b4b6-a49c2306ddc4)
+   
+   ## Grafana Dashboard
+   **Pod Metrics**
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/b84583f6-959c-4ded-abc0-b481605a5472)
+
+   **Cluster node Usage**
+   ![image](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/83bc659f-b959-4dbc-9ce0-b6ea02626992)
+
+
