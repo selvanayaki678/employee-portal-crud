@@ -47,9 +47,9 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
 8. **Monitoring with Prometheus and Grafana:**
    - EKS is monitored using Prometheus and Grafana to provide insights into the performance and health of the application.
 
-## Getting Started
+# Getting Started
 
-# To run application locally as container
+## To run application locally as container
 
 1. **Clone the repository:**
    
@@ -86,7 +86,7 @@ The application is deployed on Amazon EKS (Elastic Kubernetes Service) using Jen
             - GRANT ALL PRIVILEGES ON . TO 'root'@'ip_address'; \
             - SELECT user,host from mysql.user;
 
-# To Run application in EKS 
+## To Run application in EKS 
 1. **Create EKS and RDS instance**
     - Use the following GitHub link to create instances in AWS: https://github.com/selvanayaki678/terraform-aws
 ![Project1-Employee_portal-Page-1](https://github.com/selvanayaki678/employee-portal-crud/assets/67256407/f0ec20b9-e7a3-425b-9dca-a3b14f0c9166)
