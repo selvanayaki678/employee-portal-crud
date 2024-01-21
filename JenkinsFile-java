@@ -68,7 +68,7 @@ pipeline {
         stage ('terraform init')
         {
             steps {
-              sh 'cd helm-java-middleend;terraform init -reconfigure;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+              sh 'cd App-helmcharts/terraform-helm-java;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
             }
         } 
         stage ('Terraform apply')
@@ -77,7 +77,7 @@ pipeline {
             // expression {  return params.apply == true  }
             // }
           steps {
-              sh 'cd helm-java-middleend;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
+              sh 'cd App-helmcharts/terraform-helm-java;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
           }           
 
         }

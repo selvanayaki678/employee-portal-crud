@@ -56,7 +56,7 @@ pipeline {
             stage ('terraform init')
             {
                 steps {
-                     sh 'cd terraform-helm-react;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
+                     sh 'cd App-helmcharts/terraform-helm-react;terraform init;pwd;terraform plan -var tag=${BUILD_NUMBER}'
              }
              } 
             stage ('Terraform apply')
@@ -65,7 +65,7 @@ pipeline {
             //     // expression {  return params.apply == true  }
             //     // }
                     steps {
-                    sh 'cd terraform-helm-react;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
+                    sh 'cd App-helmcharts/terraform-helm-react;terraform apply -var tag=${BUILD_NUMBER} --auto-approve'
                 }
             
 
